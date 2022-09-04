@@ -15,27 +15,34 @@ fun main(args: Array<String>) {
 	runApplication<FiboApplication>(*args)
 }
 
-data class FiboResponse (val closest_fibonacci_number : Int)
-
+data class FiboResponse (val closest_fibonacci_number : Int);
+data class CounterResponse(val count : Long);
 @RestController
-class FibonacciResource {
+class FibonacciResource (private val fibonnaciResponseRepository : FibonacciResponseRepository){
     @GetMapping("api/fibonacci")
-	@ResponseBody
+
     fun GetCloserFibonacci(@RequestParam num : Int) : FiboResponse{
-		return FiboResponse(closerToFibonacci(num));
+		var row = FibonacciResponseEntity();
+		var result = closerToFibonacci(num);
+		row.numRequest = num;
+		row.responseFibo = result;
+		fibonnaciResponseRepository.insert(row)
+		return FiboResponse(result);
 	}
 
-	fun closerToFibonacci(num : Int) : Int{
+	@GetMapping("api/request-count")
+	fun GetRequestCount() : CounterResponse{
+		return CounterResponse((fibonnaciResponseRepository.count()));
+	}
+
+	private fun closerToFibonacci(num : Int) : Int{
 		var x = 0;
 		var y = 1;
-		var temp = 1;
 		if(num == 0)return 0;
 		if(num == 1) return 1;
 		while(true){
-			temp = x+y;
+			var temp = x+y;
 			if(num >= y && num <= temp){
-				println(y)
-				println(temp)
 				var n1 = num - y;
 				var n2 = temp - num;
 				if(n1 >= n2){
