@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.13.RELEASE"
 	kotlin("jvm") version "1.6.21"
 	kotlin("plugin.spring") version "1.6.21"
+	id("org.openapi.generator") version "6.0.1"
 }
 
 group = "test.fibonacci"
@@ -16,13 +17,16 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	runtimeOnly("com.h2database:h2")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+  	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+  	implementation("org.springframework.boot:spring-boot-starter-web")
+  	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+  	implementation("org.jetbrains.kotlin:kotlin-reflect")
+  	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+  	testImplementation("org.springframework.boot:spring-boot-starter-test")
+ 	testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.0")
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.0")
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -32,6 +36,6 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
+// tasks.withType<Test> {
+// 	useJUnitPlatform()
+// }
