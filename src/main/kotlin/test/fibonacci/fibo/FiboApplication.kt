@@ -25,7 +25,7 @@ class FibonacciResource (private val fibonnaciResponseRepository : FibonacciResp
 	@Operation(summary="Get the closest number between num and fibonacci number ", description ="Return the closest number between num and fibonacci number ")
 	@ApiResponses(
 		value = [
-			ApiResponse(responseCode = "200", description = "Number of lines in history"),
+			ApiResponse(responseCode = "200", description = "Return the closest number between num and fibonacci number"),
 		]
 	)
     @GetMapping("api/fibonacci")
