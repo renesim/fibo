@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.data.annotation.Id
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 
 @SpringBootApplication
 class FiboApplication
@@ -19,9 +22,15 @@ data class FiboResponse (val closest_fibonacci_number : Int);
 data class CounterResponse(val count : Long);
 @RestController
 class FibonacciResource (private val fibonnaciResponseRepository : FibonacciResponseRepository){
+	@Operation(summary="Get the closest number between num and fibonacci number ", description ="Return the closest number between num and fibonacci number ")
+	@ApiResponses(
+		value = [
+			ApiResponse(responseCode = "200", description = "Number of lines in history"),
+		]
+	)
     @GetMapping("api/fibonacci")
-
     fun GetCloserFibonacci(@RequestParam num : Int) : FiboResponse{
+		if(num < 0){ throw IllegalArgumentException("Negative number is not handle.")}
 		var row = FibonacciResponseEntity();
 		var result = closerToFibonacci(num);
 		row.numRequest = num;
@@ -30,6 +39,12 @@ class FibonacciResource (private val fibonnaciResponseRepository : FibonacciResp
 		return FiboResponse(result);
 	}
 
+	@Operation(summary="Get number of request", description ="Return the number of request by counting the lines")
+	@ApiResponses(
+		value = [
+			ApiResponse(responseCode = "200", description = "Number of lines in history"),
+		]
+	)
 	@GetMapping("api/request-count")
 	fun GetRequestCount() : CounterResponse{
 		return CounterResponse((fibonnaciResponseRepository.count()));
