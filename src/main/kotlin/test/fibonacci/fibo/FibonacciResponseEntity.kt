@@ -4,9 +4,7 @@ import org.springframework.data.annotation.Id
 import org.bson.types.ObjectId
 
 @Document
-public class FibonacciResponseEntity{
+class FibonacciResponseEntity(numRequest : Int, responseFibo : Int){
     @Id
-    var _id : ObjectId = ObjectId.get();
-    var numRequest : Int = 0;
-    var responseFibo : Int = 0;
+    var id : ObjectId = ObjectId.get()
 }

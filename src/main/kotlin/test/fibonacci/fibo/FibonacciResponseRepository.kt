@@ -1,5 +1,6 @@
 package test.fibonacci.fibo
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.bson.types.ObjectId
+import org.springframework.data.mongodb.repository.MongoRepository
 
-public interface FibonacciResponseRepository : MongoRepository<FibonacciResponseEntity,String>{
+interface FibonacciResponseRepository : MongoRepository<FibonacciResponseEntity,ObjectId>{
 }
